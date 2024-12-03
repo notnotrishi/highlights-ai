@@ -1,11 +1,17 @@
 // Debugging function to log element details
-function logElementDetails(element, label) {
+function logElementDetails(element, label, logType = 'all') {
   if (element) {
-    console.log(`${label} found:`, {
-      text: element.innerText,
-      innerHTML: element.innerHTML,
-      className: element.className
-    });
+    const details = {};
+    if (logType === 'text' || logType === 'all') {
+      details.text = element.innerText;
+    }
+    if (logType === 'html' || logType === 'all') {
+      details.innerHTML = element.innerHTML;
+    }
+    if (logType === 'all') {
+      details.className = element.className;
+    }
+    console.log(`${label} found:`, details);
   } else {
     console.log(`${label} not found`);
   }
@@ -49,12 +55,59 @@ function highlightText(text) {
   });
 }
 
-// Placeholder function to generate text snippets based on email content
-function getTextSnippets(subject, body) {
-  return ['Client Packs', 'During'];
+// Placeholder function to generate text snippets based on email content using AI
+async function getTextSnippets(subject, body) {
+  try {
+    // Check AI model availability
+    const {available, defaultTemperature, defaultTopK, maxTopK} = 
+      await ai.languageModel.capabilities();
+    
+    // console.log('AI model availability:', available);
+    if (available === "no") {
+      console.log("AI model not available, using default snippets");
+      return ['_NA_'];
+    }
+
+    // Create AI session
+    const session = await ai.languageModel.create({
+      temperature: 1.0,
+      topK: 3,
+    });
+    
+    // Prompt to analyze email content
+    const prompt = `
+    Extract up to 3 of the most important and meaningful fragments or sentences from this email. 
+    - The snippets should make sense even if they are not complete sentences.
+    - Focus only on action items for the user, deadlines, key decisions, or critical details.
+    - Ignore greetings, signatures, disclaimers, or other standard footer content.
+    - Do not format the response in any way—no bullets, numbers, or additional symbols in the beginning or the end.
+    - Do not change the capitalization, punctuation, or wording of the original text.
+    
+    Subject: ${subject}
+    Body: ${body}
+    
+    Only return the extracted phrases exactly as they appear in the email, without adding any other formatting to the response.
+    `;
+    
+    const result = await session.prompt(prompt);
+    
+    // Convert AI response to array of snippets
+    const snippets = result
+      .split('\n')
+      .map(s => s.trim())
+      .filter(s => s.length > 0);
+    console.log(snippets);
+    session.destroy();
+    return snippets.length > 0 ? snippets : ['_NA_'];
+    
+  } catch (error) {
+    console.error('Error generating snippets:', error);
+    return ['_NA_']; 
+  }
 }
 
-function extractEmailDetails() {
+// Make extractEmailDetails async
+async function extractEmailDetails() {
   const selectors = {
     subject: [
       '.ha h2',
@@ -82,12 +135,15 @@ function extractEmailDetails() {
   const subjectElement = findElement(selectors.subject);
   const bodyElement = findElement(selectors.body);
 
+  logElementDetails(subjectElement, 'Subject element', 'text');
+  logElementDetails(bodyElement, 'Body element', 'text');
+  
   const emailDetails = {
     subject: subjectElement ? subjectElement.innerText.trim() : '_NA_',
     body: bodyElement ? bodyElement.innerText.trim() : '_NA_',
   };
 
-  const snippets = getTextSnippets(emailDetails.subject, emailDetails.body);
+  const snippets = await getTextSnippets(emailDetails.subject, emailDetails.body);
 
   snippets.forEach(snippet => {
     highlightText(snippet);
@@ -96,5 +152,28 @@ function extractEmailDetails() {
   return emailDetails;
 }
 
-// Call extractEmailDetails when the script is executed
-extractEmailDetails();
+// Add console log to verify script loading
+// console.log('Content script loaded');
+
+// Update the function call with more detailed logging
+// document.addEventListener('DOMContentLoaded', () => {
+//   console.log('DOMContentLoaded fired');
+  
+//   extractEmailDetails()
+//     .then(details => {
+//       console.log('Email details extracted successfully:', details);
+//     })
+//     .catch(error => {
+//       console.error('Error processing email:', error);
+//     });
+// });
+
+// Add immediate execution as backup
+// console.log('Attempting immediate execution');
+extractEmailDetails()
+  .then(details => {
+    console.log('Email details extracted (immediate):', details);
+  })
+  .catch(error => {
+    console.error('Error processing email (immediate):', error);
+  });
