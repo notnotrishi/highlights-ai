@@ -1,0 +1,4 @@
+.gmail-body-highlight {
+  background-color: yellow !important;
+  transition: background-color 0.3s ease;
+}

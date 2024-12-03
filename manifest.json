@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Gmail Highlights",
+  "version": "0.1",
+  "description": "Identifies and highlights the most important snippets from a mail",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "action": {
+    "default_icon": "icon.png"
+  },
+  "content_scripts": [
+    {
+    "matches": ["https://mail.google.com/mail/u/*/*"],
+    "exclude_matches": ["https://mail.google.com/mail/u/*/#chat"],
+      "css": ["styles.css"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}
