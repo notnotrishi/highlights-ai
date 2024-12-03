@@ -11,6 +11,50 @@ function logElementDetails(element, label) {
   }
 }
 
+// Function to highlight text snippets, even if they're within formatted elements
+function highlightText(text) {
+  function getTextNodes(node) {
+    let nodes = [];
+    if (node.nodeType === Node.TEXT_NODE) {
+      nodes.push(node);
+    } else if (node.nodeType === Node.ELEMENT_NODE && !/(script|style)/i.test(node.tagName)) {
+      for (let child of node.childNodes) {
+        nodes = nodes.concat(getTextNodes(child));
+      }
+    }
+    return nodes;
+  }
+
+  const textNodes = getTextNodes(document.body);
+  const searchText = text.toLowerCase();
+
+  textNodes.forEach(node => {
+    let idx;
+    let nodeText = node.textContent;
+    let lowerText = nodeText.toLowerCase();
+    let offset = 0;
+
+    while ((idx = lowerText.indexOf(searchText, offset)) !== -1) {
+      const range = document.createRange();
+      range.setStart(node, idx);
+      range.setEnd(node, idx + text.length);
+
+      const mark = document.createElement('mark');
+      mark.style.backgroundColor = 'yellow';
+      range.surroundContents(mark);
+
+      offset = idx + mark.textContent.length;
+      lowerText = node.textContent.toLowerCase();
+    }
+  });
+}
+
+// Placeholder function to generate text snippets based on email content
+function getTextSnippets(subject, body) {
+  // Replace this logic with your actual implementation
+  return ['Hello Rishi', 'During'];
+}
+
 function extractEmailDetails() {
   // More comprehensive selectors
   const selectors = {
@@ -42,24 +86,18 @@ function extractEmailDetails() {
   const subjectElement = findElement(selectors.subject);
   const bodyElement = findElement(selectors.body);
 
-  // Log element details for debugging
-  // console.log('Debugging Email Extraction:');
-  // logElementDetails(subjectElement, 'Subject');
-  // logElementDetails(bodyElement, 'Body');
-
-  // Construct email details object
   const emailDetails = {
     subject: subjectElement ? subjectElement.innerText.trim() : '_NA_',
     body: bodyElement ? bodyElement.innerText.trim() : '_NA_',
   };
 
-  // Log final extracted details
-  console.log('Extracted Email Details:', emailDetails);
+  // Pass subject and body to the new function
+  const snippets = getTextSnippets(emailDetails.subject, emailDetails.body);
 
-  // Optional: Highlight body if found
-  if (bodyElement) {
-    bodyElement.style.backgroundColor = 'yellow';
-  }
+  // Highlight each snippet in the email view
+  snippets.forEach(snippet => {
+    highlightText(snippet);
+  });
 
   return emailDetails;
 }
