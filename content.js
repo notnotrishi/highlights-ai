@@ -40,7 +40,7 @@ function highlightText(text) {
       range.setEnd(node, idx + text.length);
 
       const mark = document.createElement('mark');
-      mark.style.backgroundColor = 'yellow';
+      mark.style.backgroundColor = 'pink';
       range.surroundContents(mark);
 
       offset = idx + mark.textContent.length;
@@ -51,12 +51,10 @@ function highlightText(text) {
 
 // Placeholder function to generate text snippets based on email content
 function getTextSnippets(subject, body) {
-  // Replace this logic with your actual implementation
-  return ['Hello Rishi', 'During'];
+  return ['Client Packs', 'During'];
 }
 
 function extractEmailDetails() {
-  // More comprehensive selectors
   const selectors = {
     subject: [
       '.ha h2',
@@ -73,7 +71,6 @@ function extractEmailDetails() {
     ],
   };
 
-  // Helper function to find first matching element
   function findElement(selectorList) {
     for (let selector of selectorList) {
       const element = document.querySelector(selector);
@@ -82,7 +79,6 @@ function extractEmailDetails() {
     return null;
   }
 
-  // Extract details using the helper function
   const subjectElement = findElement(selectors.subject);
   const bodyElement = findElement(selectors.body);
 
@@ -91,10 +87,8 @@ function extractEmailDetails() {
     body: bodyElement ? bodyElement.innerText.trim() : '_NA_',
   };
 
-  // Pass subject and body to the new function
   const snippets = getTextSnippets(emailDetails.subject, emailDetails.body);
 
-  // Highlight each snippet in the email view
   snippets.forEach(snippet => {
     highlightText(snippet);
   });
@@ -102,23 +96,5 @@ function extractEmailDetails() {
   return emailDetails;
 }
 
+// Call extractEmailDetails when the script is executed
 extractEmailDetails();
-
-// Add keyboard shortcut to trigger extraction
-//   document.addEventListener('keydown', function(event) {
-//     // Trigger on Ctrl+Shift+E
-//     if (event.ctrlKey && event.shiftKey && event.key === 'E') {
-//       extractEmailDetails();
-//     }
-//   });
-
-// Optional: Log when script is injected
-// console.log('Gmail Body Extractor script loaded');
-
-// In your service worker (e.g., background.js)
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    // Your fetch handling logic
-    fetch(event.request)
-  );
-});

@@ -5,19 +5,28 @@
   "description": "Identifies and highlights the most important snippets from a mail",
   "permissions": [
     "activeTab",
-    "scripting"
+    "scripting",
+    "commands"   
   ],
   "action": {
     "default_icon": "icon.png"
   },
   "content_scripts": [
     {
-    "matches": ["https://mail.google.com/mail/u/*/*"],
-    "exclude_matches": ["https://mail.google.com/mail/u/*/#chat"],
+      "matches": ["https://mail.google.com/mail/u/*/*"],
+      "exclude_matches": ["https://mail.google.com/mail/u/*/#chat"],
       "css": ["styles.css"]
     }
   ],
   "background": {
     "service_worker": "background.js"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U",
+        "mac": "Command+Shift+U"},
+      "description": "Trigger the extension"
+    }
   }
 }
