@@ -15,6 +15,7 @@
     {
       "matches": ["https://mail.google.com/mail/u/*/*"],
       "exclude_matches": ["https://mail.google.com/mail/u/*/#chat"],
+      "js": ["content.js"],
       "css": ["styles.css"]
     }
   ],

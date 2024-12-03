@@ -55,6 +55,29 @@ function highlightText(text) {
   });
 }
 
+function textExistsInDocument(text) {
+  return document.body.innerText.toLowerCase().includes(text.toLowerCase());
+}
+
+function findClosestSnippet(snippet) {
+  // Get first and last words, ignoring punctuation
+  const words = snippet.trim().split(/\s+/);
+  if (words.length < 2) return null;
+  
+  const firstWord = words[0].replace(/[^\w]/g, '').toLowerCase();
+  const lastWord = words[words.length - 1].replace(/[^\w]/g, '').toLowerCase();
+  
+  // Search for text between first and last word
+  const bodyText = document.body.innerText;
+  const regex = new RegExp(
+    `${firstWord}[\\s\\S]*?${lastWord}`,
+    'i'
+  );
+  
+  const match = bodyText.match(regex);
+  return match ? match[0] : null;
+}
+
 // Placeholder function to generate text snippets based on email content using AI
 async function getTextSnippets(subject, body) {
   try {
@@ -70,7 +93,7 @@ async function getTextSnippets(subject, body) {
 
     // Create AI session
     const session = await ai.languageModel.create({
-      temperature: 0.7,
+      temperature: 0.1,
       topK: 3,
     });
     
@@ -147,9 +170,31 @@ async function extractEmailDetails() {
   };
 
   const snippets = await getTextSnippets(emailDetails.subject, emailDetails.body);
+  
+  // Verify and correct snippets
+  const verifiedSnippets = snippets.map(snippet => {
+    if (snippet === '_NA_') return snippet;
+    
+    // Check for exact match
+    if (textExistsInDocument(snippet)) {
+      return snippet;
+    }
+    
+    // Try to find closest match
+    const closestMatch = findClosestSnippet(snippet);
+    if (closestMatch) {
+      console.log(`Replaced "${snippet}" with closest match: "${closestMatch}"`);
+      return closestMatch;
+    }
+    
+    console.log(`No match found for snippet: "${snippet}"`);
+    return null;
+  }).filter(Boolean);
 
-  snippets.forEach(snippet => {
-    highlightText(snippet);
+  verifiedSnippets.forEach(snippet => {
+    if (snippet !== '_NA_') {
+      highlightText(snippet);
+    }
   });
 
   return emailDetails;
