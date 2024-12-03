@@ -70,7 +70,7 @@ async function getTextSnippets(subject, body) {
 
     // Create AI session
     const session = await ai.languageModel.create({
-      temperature: 1.0,
+      temperature: 0.7,
       topK: 3,
     });
     
@@ -91,13 +91,16 @@ async function getTextSnippets(subject, body) {
     
     const result = await session.prompt(prompt);
     
-    // Convert AI response to array of snippets
+    // Clean and convert AI response to array of snippets
     const snippets = result
       .split('\n')
-      .map(s => s.trim())
+      .map(s => s.trim().replace(/^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$/g, ''))
       .filter(s => s.length > 0);
+
     console.log(snippets);
+
     session.destroy();
+
     return snippets.length > 0 ? snippets : ['_NA_'];
     
   } catch (error) {
