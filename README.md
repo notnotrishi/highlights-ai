@@ -1,7 +1,13 @@
-# Highlights AI (for Gmail)
+# Highlights AI
 
-## Description  
-Instant spotlight on what matters, for effortless triage: Key highlights marked up in your emails using private, local AI. 
+I am building a Chrome extension to help users quickly scan and identify key highlights in emails and web content, making content consumption and decision-making more efficient. For example, when managing my Gmail inbox, I often skim through emails to decide whether to act on them immediately, save them for later, or ignore them entirely — essentially performing inbox triage.
+
+Most of the existing AI tools focus on summarization using language models (LLMs), but they often fall short when it comes to efficiently highlighting critical details, without losing context. Additionally, these tools frequently require sending private information to the cloud, which raises privacy concerns for users like me.
+
+This project leverages Chrome’s built-in AI to process Gmail messages locally, extract key highlights, and visually mark them up to draw reader's attention. While the initial focus is on Gmail, I plan to extend the solution to other web content, such as blogs and articles, by applying the same principles and learnings from this initial version. This tool prioritizes user privacy while enhancing productivity and decision-making.
+
+## Description  -- Highlights AI (for Gmail)
+Highlights AI for Gmail is instant spotlight on what matters, for effortless triage: Key highlights marked up in your emails using private, local AI. 
 
 This repository provides everything you need to set up and use the [Chrome Built-in AI](https://developer.chrome.com/docs/ai/built-in) and Highlights AI extension. Follow the instructions below to get started.  
 
