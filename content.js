@@ -200,28 +200,30 @@ async function extractEmailDetails() {
   return emailDetails;
 }
 
-// Add console log to verify script loading
-// console.log('Content script loaded');
-
-// Update the function call with more detailed logging
-// document.addEventListener('DOMContentLoaded', () => {
-//   console.log('DOMContentLoaded fired');
-  
-//   extractEmailDetails()
-//     .then(details => {
-//       console.log('Email details extracted successfully:', details);
-//     })
-//     .catch(error => {
-//       console.error('Error processing email:', error);
-//     });
-// });
-
-// Add immediate execution as backup
-// console.log('Attempting immediate execution');
-extractEmailDetails()
-  .then(details => {
-    console.log('Email details extracted (immediate):', details);
-  })
-  .catch(error => {
-    console.error('Error processing email (immediate):', error);
+// Add this to content.js
+function clearHighlights() {
+  const existingHighlights = document.querySelectorAll('mark');
+  existingHighlights.forEach(highlight => {
+    const parent = highlight.parentNode;
+    parent.replaceChild(document.createTextNode(highlight.textContent), highlight);
+    parent.normalize();
   });
+}
+
+function initializeExtension() {
+  // Clear any existing highlights first
+  clearHighlights();
+  
+  // Re-extract and process email details
+  extractEmailDetails()
+    .then(details => {
+      console.log('Email details extracted (reset):', details);
+    })
+    .catch(error => {
+      console.error('Error processing email (reset):', error);
+    });
+}
+
+// Update the execution part at the bottom of content.js
+clearHighlights(); // Clear any existing state
+initializeExtension(); // Start fresh
