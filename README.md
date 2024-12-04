@@ -11,6 +11,8 @@ Highlights AI for Gmail is instant spotlight on what matters, for effortless tri
 
 This repository provides everything you need to set up and use the [Chrome Built-in AI](https://developer.chrome.com/docs/ai/built-in) and Highlights AI extension. Follow the instructions below to get started.  
 
+![Highlights AI Demo](highlights-ai-demo.gif)
+
 ---
 
 ## Prerequisites and Setup of Chrome Built-in AI  
