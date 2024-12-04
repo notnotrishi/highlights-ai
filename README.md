@@ -1,6 +1,8 @@
 # Highlights AI (for Gmail)
 
 ## Description  
+Instant spotlight on what matters, for effortless triage: Key highlights marked up in your emails using private, local AI. 
+
 This repository provides everything you need to set up and use the [Chrome Built-in AI](https://developer.chrome.com/docs/ai/built-in) and Highlights AI extension. Follow the instructions below to get started.  
 
 ---
@@ -53,8 +55,8 @@ For full licensing details, see the [`LICENSE`](LICENSE) file in this repository
 
 ## Credits  
 
-Chrome and Gemini are trademarks of Google LLC.
-Logo file: https://www.flaticon.com/
+- Chrome and Gemini are trademarks of Google LLC.
+- Logo file: https://www.flaticon.com/
 
 ---
 
