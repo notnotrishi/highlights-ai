@@ -7,7 +7,7 @@ Most of the existing AI tools focus on summarization using language models (LLMs
 This project leverages Chrome’s built-in AI to process Gmail messages locally, extract key highlights, and visually mark them up to draw reader's attention i.e., it's essentially an assistant that reads content for you and highlights important items. While the initial focus is on Gmail, the plan is to extend the solution to other web content, such as blogs and articles, by applying the same principles and learnings from this initial version.
 
 ## Highlights AI (for Gmail)
-Highlights AI for Gmail is instant spotlight on what matters, for effortless triage: key highlights marked up in your emails using private, local AI. 
+Highlights AI for Gmail is instant spotlight on what matters, for effortless inbox review and triage: key highlights marked up in your emails using private, local AI. 
 
 <p align="center">
   <img src="highlights-ai-demo.gif" alt="Highlights AI Demo" width="800"/>
