@@ -1,19 +1,26 @@
-chrome.action.onClicked.addListener((tab) => {
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    files: ['content.js']
-  });
+chrome.action.onClicked.addListener(async (tab) => {
+  try {
+    await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      files: ['content.js']
+    });
+  } catch (error) {
+    console.error('Failed to execute content script:', error);
+  }
 });
 
-chrome.commands.onCommand.addListener((command) => {
-  if (command === "trigger-action") {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs[0]) {
-        chrome.scripting.executeScript({
-          target: { tabId: tabs[0].id },
+chrome.commands.onCommand.addListener(async (command) => {
+  if (command === "trigger_action") {
+    try {
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      if (tab) {
+        await chrome.scripting.executeScript({
+          target: { tabId: tab.id },
           files: ['content.js']
         });
       }
-    });
+    } catch (error) {
+      console.error('Failed to execute command:', error);
+    }
   }
 });

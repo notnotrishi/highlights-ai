@@ -161,8 +161,8 @@ async function extractEmailDetails() {
   const subjectElement = findElement(selectors.subject);
   const bodyElement = findElement(selectors.body);
 
-  logElementDetails(subjectElement, 'Subject element', 'text');
-  logElementDetails(bodyElement, 'Body element', 'text');
+  // logElementDetails(subjectElement, 'Subject element', 'text');
+  // logElementDetails(bodyElement, 'Body element', 'text');
   
   const emailDetails = {
     subject: subjectElement ? subjectElement.innerText.trim() : '_NA_',

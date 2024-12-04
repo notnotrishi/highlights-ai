@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Gmail Highlights",
+  "name": "Highlights AI",
   "version": "0.1",
-  "description": "Identifies and highlights the most important snippets from a mail",
+  "description": "AI Highlights for Gmail -- Identifies and highlights the most important snippets from a mail",
   "permissions": [
     "activeTab",
     "scripting",
@@ -23,7 +23,7 @@
     "service_worker": "background.js"
   },
   "commands": {
-    "_execute_action": {
+    "trigger_action": {
       "suggested_key": {
         "default": "Ctrl+Shift+U",
         "mac": "Command+Shift+U"},
