@@ -61,7 +61,7 @@ For full licensing details, see the [`LICENSE`](LICENSE) file in this repository
 
 ## Credits  
 
-- Chrome and Gemini are trademarks of Google LLC.
+- Gmail, Chrome and Gemini are trademarks of Google LLC.
 - Logo file: https://www.flaticon.com/
 
 ---
