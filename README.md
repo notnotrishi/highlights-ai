@@ -9,9 +9,11 @@ This project leverages Chrome’s built-in AI to process Gmail messages locally,
 ## Highlights AI (for Gmail)
 Highlights AI for Gmail is instant spotlight on what matters, for effortless triage: key highlights marked up in your emails using private, local AI. 
 
-This repository provides everything you need to set up and use the [Chrome Built-in AI](https://developer.chrome.com/docs/ai/built-in) and Highlights AI extension. Follow the instructions below to get started.  
+<p align="center">
+  <img src="highlights-ai-demo.gif" alt="Highlights AI Demo" width="800"/>
+</p>
 
-![Highlights AI Demo](highlights-ai-demo.gif)
+This repository provides everything you need to set up and use the [Chrome Built-in AI](https://developer.chrome.com/docs/ai/built-in) and Highlights AI extension. Follow the instructions below to get started.  
 
 ---
 
