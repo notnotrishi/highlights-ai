@@ -68,7 +68,7 @@ For full licensing details, see the [`LICENSE`](LICENSE) file in this repository
 
 ## Support  
 
-Chrome's built-in AI is still not GA and this Chrome extension is an early version; you could run into issues when using Highlights as a result. If you encounter any issues or have feedback please:  
+Chrome's built-in AI is still not GA and this Chrome extension is an early version and works for English language primarily; you could run into issues when using Highlights as a result. If you encounter any issues or have feedback please:  
 - Create an issue in this repository.  
 - Reach out on X/Twitter: [@notnotrishi](https://twitter.com/notnotrishi).  
 
